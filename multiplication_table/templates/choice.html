@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Wybierz działanie:
+    <form method="post">
+    {% csrf_token %}
+    {% block content %}
+        <div>
+            <table>
+                {% for category in categories %}
+                <tr>
+                    <td><button name="category" value="{{ category.name }}">{{ category.name }}</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+{% endblock %}
+</body>
+</html>
