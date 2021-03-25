@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+{% block content %}
+        <form method="post">
+    {% csrf_token %}
+    {% if messages %}
+        <div class="container">
+            <div class="d-flex justify-content-left">
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                  <span class="{{ message.tags }}">{{ message }}</span>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+    {% endif %}
+        <div class="container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="btn btn-secondary btn-lg" id="basic-addon1">
+                        <div>
+                            <div class="alert alert-info" role="alert">
+                                <h5>Dane urzytkownika:</h5>
+                            </div>
+                            <a>{{ user_form.as_p}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <input type="submit" class="btn btn-secondary btn-lg" value="Zarejestruj">
+        </div>
+    </form>
+{% endblock %}
+
+
+
+
+
+
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <label for="username">Nazwa użytkownika:</label>-->
+<!--        <input type="text" id="username" name="username">-->
+<!--        <label for="password">Hasło:</label>-->
+<!--        <input type="password" id="password" name="password">-->
+<!--        <label for="password">Powtórz hasło:</label>-->
+<!--        <input type="password" id="repeat_password" name="repeat_password">-->
+<!--        <div>-->
+<!--            <input type="submit" value="Login">-->
+<!--        </div>-->
+<!--    </form>-->
+</div>
+</body>
+</html>
