@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form method="post">
+        {% csrf_token %}
+<!--{% load static %}-->
+        <table>
+            <tr>
+                <td>{{ user_name.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ user_name.email }}</td>
+            </tr>
+        </table>
+<!-- -------------------------------------------------- -->
+            {% if is_parent is True %}
+
+            {{ form.as_p }}
+            <a>Dodaj nowego ucznia</a>
+            <button type="submit" name="add" value="add">Dodaj</button>
+            {% for kid in kids %}
+            <table>
+                <tr>
+                    <td>{{ kid }}</td>
+                </tr>
+                <tr>
+                    <td>{{ kid.points_counter }}</td>
+                </tr>
+                <tr>
+                    <td>{{ kid.available_points }}</td>
+                </tr>
+            </table>
+            {% endfor %}
+        {% endif %}
+
+<!-- -------------------------------------------------- -->
+
+                 {% if is_parent is False %}
+
+            {{ form.as_p }}
+            <a>Edytuj</a>
+            <button type="submit" name="add" value="edit">Edytuj</button>
+            {% for i in kid %}
+            <table>
+<!--                <tr>-->
+<!--                    <td>{{ kid }}</td>-->
+<!--                </tr>-->
+                <tr>
+                    <td> <img src="../media/{{ image }}" alt="Zdjęcie profilowe" style="width:150px;height:auto;"></td>
+
+<!--                    <td> <img src="../media/16_pp.jpg" alt="Zdjęcie profilowe" style="width:150px;height:auto;"></td>-->
+
+                </tr>
+                <tr>
+                    <td>{{ i.points_counter }}</td>
+                </tr>
+                <tr>
+                    <td>{{ i.available_points }}</td>
+                </tr>
+
+            </table>
+            {% endfor %}
+        {% endif %}
+
+
+
+
+    </form>
+</body>
+</html>

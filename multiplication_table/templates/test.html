@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+TEST
+<form method="post">
+    {% csrf_token %}
+
+    {% block content %}
+    <table>
+        {% for pair in pairs_of_numbers %}
+        <tr>
+            <td>{{ pair.0 }}</td>
+            <td>math_symbol</td>
+            <td>{{ pair.1 }}</td>
+            <td>=</td>
+            <td><input type="number" name="result"></td>
+        </tr>
+            {% endfor %}
+    </table>
+
+    <button type="submit" value="OK">Sprawdź</button>
+
+{% endblock %}
+</form>
+</body>
+</html>
+
