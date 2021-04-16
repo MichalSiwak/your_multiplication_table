@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+TEST!
+
+
+    {% block content %}
+    <table>
+        {% for pair in data %}
+        <tr>
+            <td>{{ pair.0 }}</td>
+            <td>math_symbol</td>
+            <td>{{ pair.1 }}</td>
+            <td>=</td>
+            <td>{{ pair.2 }}</td>
+
+
+            {% if pair.3 is True %}
+            <td>Dobrze</td>
+            {% elif pair.3 is False %}
+            <td>Źle</td>
+            {% endif %}
+
+        </tr>
+            {% endfor %}
+    </table>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{{ points }}
+
+
+</body>
+</html>
