@@ -22,6 +22,11 @@ class LoginForm(forms.Form):
     username = forms.CharField(label='Login', max_length=120)
     password = forms.CharField(label='Hasło', max_length=120, widget=forms.PasswordInput)
 
+    def __init__(self, *args, **kwargs):
+        super(forms.Form, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'input'
+
 
 class RegisterUserForm(forms.Form):
     username = forms.CharField(label='Login', max_length=120)
@@ -29,10 +34,13 @@ class RegisterUserForm(forms.Form):
     repeat_password = forms.CharField(label='Powtórz hasło', max_length=120, widget=forms.PasswordInput)
     email = forms.EmailField(label="E-mail")
 
+    def __init__(self, *args, **kwargs):
+        super(forms.Form, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'input'
+
 
 class NewKidForm(forms.Form):
-    # first_name = forms.CharField(label='Imię', max_length=120)
-    # last_name = forms.CharField(label='Nazwisko', max_length=120)
     username = forms.CharField(label='Login', max_length=120)
     password = forms.CharField(label='Hasło', max_length=120, widget=forms.PasswordInput)
     repeat_password = forms.CharField(label='Powtórz hasło', max_length=120, widget=forms.PasswordInput)

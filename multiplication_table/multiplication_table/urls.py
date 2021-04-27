@@ -16,16 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from table.views import *
-from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
 
-
 urlpatterns = [
-
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
@@ -43,9 +40,9 @@ urlpatterns = [
     # --------------------------------------------
     path('test/', TestView.as_view(), name='test'),
     path('test1/', TestPointsView.as_view(), name='test1'),
-
 ]
 
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+

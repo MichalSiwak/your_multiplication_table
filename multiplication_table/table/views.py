@@ -15,15 +15,33 @@ import pprint
 
 class IndexView(View):
     def get(self, request):
-        return render(request, 'index.html')
+        if request.user.is_authenticated:
+            user_name = request.user
+            return render(request, 'index.html', {'user_name': user_name})
+        else:
+            return render(request, 'index.html')
+
+    # def post(self, request):
+    #     if 'logout' in request.POST:
+    #         return redirect('logout')
+    #     if 'login' in request.POST:
+    #         return redirect('login')
+    #     if 'register' in request.POST:
+    #         return redirect('register')
+    #     if 'user' in request.POST:
+    #         return redirect('user')
 
 #----------------------users view--------------------------------
 
 
 class RegisterView(View):
     def get(self, request):
-        user_form = RegisterUserForm()
-        return render(request, 'register.html', {'user_form': user_form})
+        form = RegisterUserForm()
+        # form = LoginForm()
+        register = True
+        # print(request.path)
+        # messages.info(request, 'Rejestracja przebiegła pomyślnie.')
+        return render(request, 'register.html', {'form': form, 'register': register})
 
     @transaction.atomic
     def post(self, request):
@@ -31,22 +49,34 @@ class RegisterView(View):
 
         if not form.is_valid():
             return redirect('/register')
+
         if User.objects.filter(username=form.cleaned_data['username']).exists():
             messages.error(request, 'Login zajęty. Wybierz inny.')
+            return redirect('/register')
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
+        repeat_password = form.cleaned_data['repeat_password']
         email = form.cleaned_data['email']
+        # print(password)
+        # print(repeat_password)
+
+        if password != repeat_password:
+            messages.error(request, 'Hasła muszą być takie same.')
+            return redirect('/register')
+
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
         ProfileParent.objects.create(user_id=user.id)
-        messages.info(request, 'Dodano nowego użytkwnika.')
+        messages.info(request, 'Rejestracja przebiegła pomyślnie.')
         return redirect('login')
 
 
 class LoginView(View):
     def get(self, request):
         form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        login = True
+        # messages.info(request, 'Rejestracja przebiegła pomyślnie.')
+        return render(request, 'login.html', {'form': form, 'login': login})
 
     def post(self, request):
         form = LoginForm(request.POST)
@@ -101,7 +131,7 @@ class UserView(LoginRequiredMixin, View):
         return redirect('new_kid')
 
 
-class AddNewKidView(View):
+class AddNewKidView(LoginRequiredMixin, View):
     def get(self, request):
         form = NewKidForm()
         return render(request, 'new_kid.html', {'form': form})
@@ -126,7 +156,7 @@ class AddNewKidView(View):
         return redirect('login')
 
 
-class EditProfileView(View):
+class EditProfileView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         form = EditKidsProfileForm(initial={"username": user.username})
@@ -149,7 +179,7 @@ class EditProfileView(View):
 
 # -------------------------------------------------
 
-class CategorySelectionView(View):
+class CategorySelectionView(LoginRequiredMixin, View):
     def get(self, request):
         categories = Categories.objects.all()
         return render(request, 'choice.html', {'categories': categories})

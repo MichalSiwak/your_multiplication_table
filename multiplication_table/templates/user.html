@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content_title %}
+{% endblock %}
 
+
+{% block content %}
     <form method="post">
         {% csrf_token %}
 <!--{% load static %}-->
@@ -19,7 +17,8 @@
         </table>
 <!-- -------------------------------------------------- -->
             {% if is_parent is True %}
-
+            <a>Edytuj</a>
+            <button type="submit" name="add" value="edit">Edytuj</button>
             {{ form.as_p }}
             <a>Dodaj nowego ucznia</a>
             <button type="submit" name="add" value="add">Dodaj</button>
@@ -71,5 +70,4 @@
 
 
     </form>
-</body>
-</html>
+{% endblock %}
